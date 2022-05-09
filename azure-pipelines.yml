@@ -8,7 +8,7 @@ variables:
   tag: '$(Build.BuildId)'
   imagePullSecret: 'azure-sa-token-tbb4v'
 stages:
-- stage: 'Build & Push Image.'
+- stage: 'Build and push'
   displayName: 'Build and push'
   jobs:  
   - job: 'Build'
