@@ -8,11 +8,11 @@ variables:
   tag: '$(Build.BuildId)'
   imagePullSecret: 'azure-sa-token-tbb4v'
 stages:
-- stage: 'Build'
+- stage: 'Build & Push Image.'
   displayName: 'Build and push'
   jobs:  
   - job: 'Build'
-    displayName: 'Build job'
+    displayName: 'Build Package $(appRepository)'
     pool: 
       name: default
       vmImage: 'ubuntu-20.04'
@@ -34,8 +34,9 @@ stages:
         mavenPomFile: 'pom.xml'
         goals: 'spring-boot:build-image'
         publishJUnitResults: false
-        jdkVersionOption: '1.14'    
-        javaHomeOption: 'JAVA_HOME'
+        jdkArchitectureOption: 'x64'
+        javaHomeOption: 'JDKVersion' 
+        jdkVersionOption: 'default'
     - task: Docker@2
       displayName: Push Docker Images
       inputs:
