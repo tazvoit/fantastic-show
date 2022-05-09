@@ -43,8 +43,7 @@ stages:
         containerRegistry: 'dockerRegistryConnection'
         repository: $(appRepository)
         command: 'push'
-        tags: |
-          $(tag)
+        tags: 'latest'
 - stage: 'Deploy'
   displayName: 'Deploy the containers'
   dependsOn: Build_Push
