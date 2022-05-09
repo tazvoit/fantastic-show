@@ -4,9 +4,9 @@ trigger:
 
 variables:
   appRepository: 'fantastic-show'
-  uriImage: 'tazvoit/$(appRepository)'
   buildConfiguration: 'Release'
   tag: '$(Build.BuildId)'
+  uriImage: 'tazvoit/$(appRepository):$(tag)'
   imagePullSecret: 'azure-sa-token-tbb4v'
 stages:
 - stage: 'Build_Push'
