@@ -7,8 +7,6 @@ variables:
   buildConfiguration: 'Release'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'azure-sa-token-tbb4v'
-  SONAR_SCANNER_OPTS: -Xmx4096m
-  NODE_OPTIONS: --max-old-space-size=8192
 stages:
 - stage: 'Build'
   displayName: 'Build and push'
@@ -22,14 +20,14 @@ stages:
     - task: Maven@3
       displayName: 'Build and push the image to container registry'
       inputs:
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
         mavenPomFile: '$(Build.SourcesDirectory)/pom.xml'
-        goals: 'fabric8:build -Popenshift -DskipTests'
+        goals: 'package'
         mavenOptions: '-Xmx3072m'
         jdkArchitectureOption: 'x64'
-        javaHomeOption: 'JAVA_HOME' 
-        jdkVersionOption: '1.14'
-        tags: |
-          $(tag)  
+        javaHomeOption: 'JDKVersion' 
+        jdkVersionOption: 'default'
     - task: Maven@3
       displayName: Build Docker image
       inputs:
