@@ -44,7 +44,8 @@ stages:
         containerRegistry: 'dockerRegistryConnection'
         repository: $(uriImage)
         command: 'push'
-        tags: '1.0.0'
+        tags: |
+          $(tag)
 - stage: 'Deploy'
   displayName: 'Deploy the containers'
   dependsOn: Build_Push
