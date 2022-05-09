@@ -41,7 +41,7 @@ stages:
       displayName: Push Docker Images
       inputs:
         containerRegistry: 'dockerRegistryConnection'
-        repository: tazvoit/$(appRepository)
+        repository: $(appRepository)
         command: 'push'
         tags: |
           $(tag)
