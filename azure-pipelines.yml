@@ -4,6 +4,7 @@ trigger:
 
 variables:
   appRepository: 'fantastic-show'
+  uriImage: 'tazvoit/$(appRepository)'
   buildConfiguration: 'Release'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'azure-sa-token-tbb4v'
@@ -32,7 +33,7 @@ stages:
       displayName: Build Docker image
       inputs:
         mavenPomFile: 'pom.xml'
-        goals: 'spring-boot:build-image'
+        goals: 'spring-boot:build-image -Dspring-boot.build-image.imageName=$(uriImage)'
         publishJUnitResults: false
         jdkArchitectureOption: 'x64'
         javaHomeOption: 'JDKVersion' 
@@ -41,7 +42,7 @@ stages:
       displayName: Push Docker Images
       inputs:
         containerRegistry: 'dockerRegistryConnection'
-        repository: tazvoit/$(appRepository)
+        repository: $(uriImage)
         command: 'push'
         tags: '1.0.0'
 - stage: 'Deploy'
