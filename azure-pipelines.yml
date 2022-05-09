@@ -47,7 +47,7 @@ stages:
           $(tag)
 - stage: 'Deploy'
   displayName: 'Deploy the containers'
-  dependsOn: Build
+  dependsOn: Build_Push
   jobs:
   - deployment: Deploy
     displayName: Deploy
