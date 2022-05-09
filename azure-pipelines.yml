@@ -9,36 +9,7 @@ variables:
   imagePullSecret: 'azure-sa-token-tbb4v'
   SONAR_SCANNER_OPTS: -Xmx4096m
   NODE_OPTIONS: --max-old-space-size=8192
-
 stages:
-- stage: 'Analysis'
-  displayName: 'Prepare Analysis Configuration' 
-  jobs:
-  - job: 'Analysis'
-    displayName: 'Prepare Analysis Configuration'
-    pool:
-     name: default
-     vmImage: 'ubuntu-20.04'
-    steps:
-    # Configurar Proyecto
-    - task: SonarQubePrepare@5
-      inputs:
-        SonarQube: 'sonarqube'
-        scannerMode: 'CLI'
-        configMode: 'manual'
-        cliProjectName: "$(Build.DefinitionName)"
-        cliProjectKey: "$(Build.DefinitionName)"
-        cliProjectVersion: "$(Build.BuildNumber)"
-        cliSources: '.'
-        extraProperties: |
-          sonar.javascript.node.maxspace=6096
-        
-    # Ejecutar Analisis
-    - task: SonarQubeAnalyze@5
-    # Publish Quality Gate Result task
-    - task: SonarQubePublish@5
-      inputs:
-        pollingTimeoutSec: '300'
 - stage: 'Build'
   displayName: 'Build and push'
   jobs:  
