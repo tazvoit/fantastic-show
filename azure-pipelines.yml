@@ -43,7 +43,7 @@ stages:
         containerRegistry: 'dockerRegistryConnection'
         repository: tazvoit/$(appRepository)
         command: 'push'
-        tags: 'latest'
+        tags: '1.0.0'
 - stage: 'Deploy'
   displayName: 'Deploy the containers'
   dependsOn: Build_Push
